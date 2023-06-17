@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Body, Param} from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards} from '@nestjs/common';
 import { RecordsService } from './records.service';
 import { Record } from './record.schema';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { UpdateRecordDto } from './dto/update-record.dto';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard())
 @Controller('records')
 export class RecordsController {
   constructor(private recordsService: RecordsService){}
