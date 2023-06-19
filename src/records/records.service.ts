@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Record } from './record.schema';
-import { User } from 'src/auth/user.schema';
+import { Record } from './schemas/record.schema';
+import { User } from 'src/auth/schemas/user.schema';
 
 @Injectable()
 export class RecordsService {
@@ -11,7 +11,7 @@ export class RecordsService {
 
   async findById(id: string, user: User): Promise<Record> {
     
-    await this.checkRecordAuthorization(id, user);
+    await this.validateAccessPermission(id, user);
 
     return await this.recordsModel.findById(id);
   }
@@ -27,36 +27,57 @@ export class RecordsService {
     return records;
   }
 
-  async create(record: Record, user: User): Promise<Record> {
+  async create(record: Record, user: User): Promise<{ message: string }> {
 
     const data = Object.assign(record, {id_sender: user._id});
+    (await this.recordsModel.create(data)).save();
 
-    return (await this.recordsModel.create(data)).save();
+    return { message: "Record created." }
+
   }
   
-  async updateById(id: string, record: Record, user: User): Promise<Record>{
+  async updateById(id: string, record: Record, user: User): Promise<{ message: string }> {
 
-    await this.checkRecordAuthorization(id, user);
+    await this.validateModificationPermission(id, user);
 
-    return await this.recordsModel.findByIdAndUpdate(id, record , {
+    await this.recordsModel.findByIdAndUpdate(id, record , {
       new: true,
       runValidators: true
     });
+
+    return { message: "Record updated." }
   }
 
-  async delete(id: string, user: User): Promise<Record> {
+  async delete(id: string, user: User): Promise<{ message: string }> {
 
-    await this.checkRecordAuthorization(id, user);
+    await this.validateModificationPermission(id, user);
     
-    return await this.recordsModel.findByIdAndDelete(id);
+    await this.recordsModel.findByIdAndDelete(id);
+
+    return { message: "Record created." }
   }
 
-  async checkRecordAuthorization(id: string, user: User) {
+  async validateAccessPermission(id: string, user: User) {
 
     const record = await this.recordsModel.findById(id);
     
-    if (!record || (user._id !== record.id_sender && user._id !== record.id_receiver)) {
+    if (!record){
       throw new NotFoundException('Record not found.');
+    }
+    else if(user._id !== record.id_sender && user._id !== record.id_receiver){
+      throw new UnauthorizedException('Access denied.');
+    }
+  }
+
+  async validateModificationPermission(id: string, user: User) {
+
+    const record = await this.recordsModel.findById(id);
+    
+    if (!record){
+      throw new NotFoundException('Record not found.');
+    }
+    else if(user._id !== record.id_sender){
+      throw new UnauthorizedException('Access denied.');
     }
   }
 }

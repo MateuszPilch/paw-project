@@ -8,7 +8,7 @@ export class ChangePasswordDto {
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(8,{message: 'New password is too short'})
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {message: 'New password is too weak'})
+  @MinLength(8,{message: 'new password is too short'})
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {message: 'new password is too weak'})
   readonly newPassword: string;
 }

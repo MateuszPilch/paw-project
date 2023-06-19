@@ -6,6 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { RecordsModule } from './records/records.module';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { FriendsService } from './friends/friends.service';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
@@ -16,20 +18,19 @@ import { MailerModule } from '@nestjs-modules/mailer';
     MongooseModule.forRoot(process.env.DB_URI),
     MailerModule.forRoot({
       transport: {
-        host: 'localhost',
-        port: 465,
-        secure: true,
+        host: process.env.MAILDEV_INCOMING_HOST,
         auth: {
           user: process.env.MAILDEV_INCOMING_USER,
           pass: process.env.MAILDEV_INCOMING_PASS,
         },
       },
       defaults: {
-        from: '"No Reply" <no-reply@whereismymoney.com>',
+        from: process.env.MAILDEV_INCOMING_USER,
       },
     }),
     RecordsModule,
-    AuthModule
+    AuthModule,
+    FriendsModule
   ],
   controllers: [AppController],
   providers: [AppService],

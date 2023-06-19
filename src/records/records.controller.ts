@@ -1,9 +1,8 @@
-import { Controller, Req, Get, Post, Put, Delete, Body, Param, UseGuards, Query} from '@nestjs/common';
+import { Controller, Req, Get, Post, Put, Delete, Body, Param, UseGuards} from '@nestjs/common';
 import { RecordsService } from './records.service';
-import { Record } from './record.schema';
+import { Record } from './schemas/record.schema';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { UpdateRecordDto } from './dto/update-record.dto';
-import { Query as ExpressQuery } from 'express-serve-static-core';
 import { AuthGuard } from '@nestjs/passport';
 
 @UseGuards(AuthGuard())
@@ -17,22 +16,22 @@ export class RecordsController {
   }
 
   @Get()
-  async getAllRecords(@Query() query: ExpressQuery, @Req() req): Promise<Record[]> {
+  async getAllRecords(@Req() req): Promise<Record[]> {
     return this.recordsService.findAll(req.user);
   }
 
   @Post()
-  async createRecord(@Body() record: CreateRecordDto, @Req() req): Promise<Record> {
+  async createRecord(@Body() record: CreateRecordDto, @Req() req): Promise<{ message: string }> {
     return this.recordsService.create(record, req.user);
   }
 
   @Put(':id')
-  async updateRecord(@Param('id') id: string, @Body() record: UpdateRecordDto, @Req() req): Promise<Record> {
+  async updateRecord(@Param('id') id: string, @Body() record: UpdateRecordDto, @Req() req): Promise<{ message: string }> {
     return this.recordsService.updateById(id, record, req.user);
   }
   
   @Delete(':id')
-  async deleteRecord(@Param('id') id: string, @Req() req): Promise<Record> {
+  async deleteRecord(@Param('id') id: string, @Req() req): Promise<{ message: string }> {
     return this.recordsService.delete(id, req.user);
   }
 }
