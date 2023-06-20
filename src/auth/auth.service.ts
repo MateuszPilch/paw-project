@@ -7,9 +7,6 @@ import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { ChangePasswordDto } from './dto/change.password.dto';
-import { ForgotPasswordDto } from './dto/forgot.password.dto';
-import { ResetPasswordDto } from './dto/reset.password.dto';
-import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +14,6 @@ export class AuthService {
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
-    private mailerService: MailerService,
   ) {}
 
   async signUp(signUpDto: SignUpDto): Promise<{ token: string }> {
@@ -75,26 +71,6 @@ export class AuthService {
     await user.save();
 
     return { message: 'Password changed successfully.' };
-  }
-
-  async forgotPassword(forgotPasswordDto: ForgotPasswordDto): Promise<{ message: string }>
-  {
-    const { email } = forgotPasswordDto;/*
-    const token = Math.random().toString(20);
-    const url = 'http://localhost:3000/reset/${token}';
-
-    await this.mailerService.sendMail({
-      to: email, 
-      subject: 'Reset you password',
-      html: 'Enter this <a href="${url}">link</a> to reset your password',
-    }) */
-    return;
-  }
-
-  async resetPassword(resetPasswordDto: ResetPasswordDto): Promise<{ message: string }>
-  {
-    const { password } = resetPasswordDto;
-    return ;
   }
 
   async hashPassword(password: string): Promise<string>

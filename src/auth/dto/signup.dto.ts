@@ -14,7 +14,7 @@ export class SignUpDto {
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(8,{message: 'password is too short'})
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {message: 'password is too weak'})
+  @MinLength(8, { message: 'password is too short' })
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password is too weak' })
   readonly password: string;
 }

@@ -1,11 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { FriendDto } from 'src/friends/dto/friend.dto';
+import { Record } from '../../records/schemas/record.schema';
+import { Friend } from 'src/friends/schemas/friend.schema';
 
 @Schema({
   timestamps: true,
 })
 export class User extends Document{
+
   @Prop()
   nickname: string;
 
@@ -16,7 +18,10 @@ export class User extends Document{
   password: string;
   
   @Prop()
-  friends: FriendDto[]; 
+  friends: Friend[]; 
+
+  @Prop()
+  settings: Record[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
