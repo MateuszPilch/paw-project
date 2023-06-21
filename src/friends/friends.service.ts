@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { User } from 'src/auth/schemas/user.schema';
-import { UserDto } from 'src/auth/dto/user.dto';
+import { User } from '../auth/schemas/user.schema';
+import { UserDto } from '../auth/dto/user.dto';
 import { Friend } from './schemas/friend.schema';
 
 @Injectable()

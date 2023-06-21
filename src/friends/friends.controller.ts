@@ -2,7 +2,7 @@ import { Controller, Req, Get, Delete, Body, Param, UseGuards, Patch} from '@nes
 import { AuthGuard } from '@nestjs/passport';
 import { FriendsService } from './friends.service';
 import { Friend } from './schemas/friend.schema';
-import { UserDto } from 'src/auth/dto/user.dto';
+import { UserDto } from '../auth/dto/user.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('friends')

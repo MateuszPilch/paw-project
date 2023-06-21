@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Record } from './schemas/record.schema';
-import { UserDto } from 'src/auth/dto/user.dto';
+import { UserDto } from '../auth/dto/user.dto';
 
 @Injectable()
 export class RecordsService {

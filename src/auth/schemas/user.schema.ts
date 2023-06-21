@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Record } from '../../records/schemas/record.schema';
-import { Friend } from 'src/friends/schemas/friend.schema';
+import { Friend } from '../../friends/schemas/friend.schema';
 
 @Schema({
   timestamps: true,
