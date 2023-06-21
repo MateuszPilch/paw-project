@@ -10,20 +10,20 @@ export class FriendsService {
   constructor(@InjectModel(User.name)private usersModel: Model<User>){
   }
 
-  async findByNickname(nickname: string, user: UserDto): Promise<Friend[]>{
+  async getByNickname(nickname: string, user: UserDto): Promise<Friend[]>{
 
     const data = await this.usersModel.find({ nickname: nickname }).select("_id nickname");
 
     const friendsList = data.filter((friend) => friend._id !== user._id);
 
     if (!friendsList || friendsList.length === 0) {
-      throw new NotFoundException('Friends not found.');
+      throw new NotFoundException('Users with this username does not exist.');
     }
 
     return friendsList;
   }
 
-  async friendsList(user: UserDto){
+  async getFriendsList(user: UserDto){
 
     await this.validateAccessPermission(user);
     

@@ -9,16 +9,16 @@ export class RecordsService {
   constructor(@InjectModel(Record.name)private recordsModel: Model<Record>){
   }
 
-  async findById(id: string, user: UserDto): Promise<Record> {
+  async getById(id: string, user: UserDto): Promise<Record> {
     
     await this.validateAccessPermission(id, user);
 
     return await this.recordsModel.findById(id);
   }
 
-  async findAll(user: UserDto): Promise<Record[]> {
+  async getAll(user: UserDto): Promise<Record[]> {
 
-    const records = await this.recordsModel.find( {$or:[{ id_sender: user._id }, { id_receiver: user._id }]});
+    const records = await this.recordsModel.find( {$or:[{ id_sender: user._id }, { id_receiver: user._id }] });
     
     if (!records) {
       throw new NotFoundException('Record not found.');
@@ -54,17 +54,17 @@ export class RecordsService {
     
     await this.recordsModel.findByIdAndDelete(id);
 
-    return { message: "Record created." }
+    return { message: "Record deleted." }
   }
 
   async validateAccessPermission(id: string, user: UserDto) {
 
-    const record = await this.recordsModel.findById(id);
-    
+  const record = await this.recordsModel.findById(id);
+
     if (!record){
       throw new NotFoundException('Record not found.');
     }
-    else if(user._id !== record.id_sender && user._id !== record.id_receiver){
+    else if(!(user._id.equals(record.id_sender)) && !(user._id.equals(record.id_receiver))){
       throw new UnauthorizedException('Access denied.');
     }
   }
@@ -76,7 +76,7 @@ export class RecordsService {
     if (!record){
       throw new NotFoundException('Record not found.');
     }
-    else if(user._id !== record.id_sender){
+    else if(!user._id.equals(record.id_sender)){
       throw new UnauthorizedException('Access denied.');
     }
   }

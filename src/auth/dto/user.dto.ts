@@ -1,10 +1,10 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 
 export class UserDto {
   
   @IsNotEmpty()
-  readonly _id: ObjectId;
+  readonly _id: Types.ObjectId;
   
   @IsNotEmpty()
   @IsString()

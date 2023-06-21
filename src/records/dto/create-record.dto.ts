@@ -1,12 +1,12 @@
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 export class CreateRecordDto
 {
-  readonly id_sender: ObjectId;
+  readonly id_sender: Types.ObjectId;
 
   @IsNotEmpty()
-  readonly id_receiver: ObjectId;
+  readonly id_receiver: Types.ObjectId;
 
   @IsNotEmpty()
   @IsString()

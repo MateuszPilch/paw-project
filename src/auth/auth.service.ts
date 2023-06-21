@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
@@ -22,7 +22,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email });
   
     if (user) {
-      throw new BadRequestException('This email address is already registered.');
+      throw new ConflictException('This email address is already registered.');
     }
 
     const hashedPassword = await this.hashPassword(password);

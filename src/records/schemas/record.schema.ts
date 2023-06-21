@@ -1,15 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 
 @Schema({
   timestamps: true,
 })
 export class Record{
-  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'})
-  id_sender: ObjectId;
+  @Prop({ type: Types.ObjectId, required: true, ref: 'User'})
+  id_sender: Types.ObjectId;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'})
-  id_receiver: ObjectId;
+  @Prop({ type: Types.ObjectId, required: true, ref: 'User'})
+  id_receiver: Types.ObjectId;
 
   @Prop({ required: true })
   title: string;
