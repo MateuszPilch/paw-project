@@ -14,7 +14,7 @@ export class FriendsService {
 
     const data = await this.usersModel.find({ nickname: nickname }).select("_id nickname");
 
-    const friendsList = data.filter((friend) => friend._id !== user._id);
+    const friendsList = data.filter(friend => friend._id !== user._id);
 
     if (!friendsList || friendsList.length === 0) {
       throw new NotFoundException('Users with this username does not exist.');

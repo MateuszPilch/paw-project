@@ -31,7 +31,6 @@ export class AuthService {
       email,
       password: hashedPassword,
     });
-
     const token = this.jwtService.sign({ id: newUser._id });
 
     return { token };
@@ -41,9 +40,14 @@ export class AuthService {
 
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
+
+    if (!user) {
+      throw new BadRequestException('Invalid email or password.');
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!user || !isPasswordValid) {
+    if (!isPasswordValid) {
       throw new BadRequestException('Invalid email or password.');
     }
 
@@ -68,6 +72,7 @@ export class AuthService {
     }
 
     user.password = await this.hashPassword(newPassword);
+    
     await user.save();
 
     return { message: 'Password changed successfully.' };

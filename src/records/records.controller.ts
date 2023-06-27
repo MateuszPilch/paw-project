@@ -153,10 +153,6 @@ export class RecordsController {
   @ApiBody({
     schema: {
       properties: { 
-        id_receiver: {
-          type: 'ObjectId',
-          example: '6491b99f5c3dfd674fd6e86d'
-        },
         title: {
           type: 'string',
           example: 'Test record updated'

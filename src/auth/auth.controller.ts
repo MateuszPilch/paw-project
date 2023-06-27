@@ -68,7 +68,21 @@ export class AuthController {
       }
     }
   })
-  @ApiResponse({ status: 201, description: 'Successfully logged in.'})
+  @ApiResponse({ status: 201, description: 'Successfully logged in.' ,
+  schema: {
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        token: {
+          type: 'string',
+          description: '',
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        },
+      }
+    }
+  }
+})
   @ApiResponse({ status: 400, description: 'Invalid email or password.' })
   login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
     return this.authService.login(loginDto);

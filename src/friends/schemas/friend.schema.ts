@@ -1,11 +1,11 @@
 import { Prop, Schema} from '@nestjs/mongoose';
-import { ObjectId, Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 @Schema()
 export class Friend{
   
-  @Prop({unique: true, type: Types.ObjectId})
-  _id: ObjectId;
+  @Prop({ unique: true })
+  _id: mongoose.Types.ObjectId;
 
   @Prop()
   nickname: string;

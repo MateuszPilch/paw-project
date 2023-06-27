@@ -6,12 +6,12 @@ import { Friend } from '../../friends/schemas/friend.schema';
 @Schema({
   timestamps: true,
 })
-export class User extends Document{
+export class User extends Document {
 
   @Prop()
   nickname: string;
 
-  @Prop({ unique: true, trim: true})
+  @Prop({ unique: true, trim: true })
   email: string;
 
   @Prop()

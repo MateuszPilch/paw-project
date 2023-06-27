@@ -3,8 +3,6 @@ import { Types } from "mongoose";
 
 export class CreateRecordDto
 {
-  readonly id_sender: Types.ObjectId;
-
   @IsNotEmpty()
   readonly id_receiver: Types.ObjectId;
 

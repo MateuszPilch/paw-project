@@ -31,6 +31,7 @@ export class FriendsController {
       }
     }
   }})
+  @ApiResponse({ status: 401, description: 'Access denied.' })
   @ApiResponse({ status: 404, description: 'Friends not found.' })
   async getByNickname(@Param('nickname') nickname: string, @Req() req): Promise<Friend[]> {
     return this.friendsService.getByNickname(nickname, req.user);
