@@ -2,11 +2,13 @@ import { BadRequestException, ConflictException, Injectable, NotFoundException} 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
+import { Settings } from './schemas/settings.schema';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { ChangePasswordDto } from './dto/change.password.dto';
+
 
 @Injectable()
 export class AuthService {
@@ -30,6 +32,7 @@ export class AuthService {
       nickname,
       email,
       password: hashedPassword,
+      settings: new Settings()
     });
     const token = this.jwtService.sign({ id: newUser._id });
 

@@ -108,7 +108,7 @@ export class AuthController {
   })
   @ApiResponse({ status: 201, description: 'Password changed successfully.' })
   @ApiResponse({ status: 400, description: 'Invalid old password.' })
-  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({ status: 401, description: 'Access denied.' })
   @ApiResponse({ status: 404, description: 'User not found.' })
   async changePassword(@Body() changePasswordDto: ChangePasswordDto, @Req() req): Promise<{ message: string }>  {
     return await this.authService.changePassword(req.user._id, changePasswordDto);

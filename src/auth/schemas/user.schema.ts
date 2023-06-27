@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Record } from '../../records/schemas/record.schema';
 import { Friend } from '../../friends/schemas/friend.schema';
+import { Settings } from './settings.schema';
 
 @Schema({
   timestamps: true,
@@ -21,7 +21,7 @@ export class User extends Document {
   friends: Friend[]; 
 
   @Prop()
-  settings: Record[];
+  settings: Settings;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
